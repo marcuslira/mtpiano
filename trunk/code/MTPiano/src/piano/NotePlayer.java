@@ -6,8 +6,6 @@ import java.util.Map;
 import processing.core.PApplet;
 import ddf.minim.AudioOutput;
 import ddf.minim.Minim;
-import ddf.minim.effects.LowPassSP;
-import ddf.minim.signals.SquareWave;
 
 public class NotePlayer {
 
@@ -29,13 +27,23 @@ public class NotePlayer {
 
 		Minim minim = new Minim(app);
 		AudioOutput out = minim.getLineOut(Minim.MONO, 2048);
-
+		
 		NoteMinim nm = new NoteMinim();
 		nm.setMinim(minim);
 		nm.setAudioOutput(out);
 		
 		keys.put(k, nm);
+
+		if (k == Key.KEY_TYPE_C) {
+			out.playNote("C3");
+		} else if (k == Key.KEY_TYPE_A) {
+			out.playNote("A3");
+		}
 		
+		if (out.isMuted()) {
+			out.unmute();
+		}
+		/*
 		out.pan();
 
 		// create a SquareWave with a frequency of 440 Hz, 
@@ -56,15 +64,15 @@ public class NotePlayer {
 
 		if (out.isMuted()) {
 			out.unmute();
-		}
+		}*/
 	}
 
 	public void stopNote(Key k) {
 		if (keys.containsKey(k)) {
-			NoteMinim nm = keys.get(k);
-			nm.getAudioOutput().mute();
-			nm.getAudioOutput().close();
-			nm.getMinim().stop();
+//			NoteMinim nm = keys.get(k);
+//			nm.getAudioOutput().mute();
+//			nm.getAudioOutput().close();
+//			nm.getMinim().stop();
 		}
 	}
 
