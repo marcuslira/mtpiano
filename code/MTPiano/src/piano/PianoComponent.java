@@ -105,7 +105,17 @@ public class PianoComponent extends AbstractVisibleComponent {
 		if (x<80 && y<80) {
 			return NotePlayer.Key.KEY_TYPE_C;
 		} else if (x>80 && x<160 && y<80) {
+			return NotePlayer.Key.KEY_TYPE_D;
+		}  else if (x>160 && x<240 && y<80) {
+			return NotePlayer.Key.KEY_TYPE_E;
+		}  else if (x>240 && x<320 && y<80) {
+			return NotePlayer.Key.KEY_TYPE_F;
+		}  else if (x>320 && x<400 && y<80) {
+			return NotePlayer.Key.KEY_TYPE_G;
+		}  else if (x>400 && x<480 && y<80) {
 			return NotePlayer.Key.KEY_TYPE_A;
+		}  else if (x>480 && x<560 && y<80) {
+			return NotePlayer.Key.KEY_TYPE_B;
 		} else {
 			return NotePlayer.Key.KEY_TYPE_INVALID;
 		}
@@ -138,30 +148,25 @@ public class PianoComponent extends AbstractVisibleComponent {
 
 	@Override
 	public void drawComponent(PGraphics g) {
-		MTColor strokeCol2 = new MTColor(255, 0, 0, 255);
-		g.strokeWeight(this.getStrokeWeight());
-		g.stroke(strokeCol2.getR(), strokeCol2.getG(), strokeCol2.getB(), strokeCol2.getAlpha());
-		
-		MTColor fillCol2 = new MTColor(255, 0, 0, 255);
-		g.fill(fillCol2.getR(), fillCol2.getG(), fillCol2.getB(), fillCol2.getAlpha());
-		
-		
-		g.beginShape(PApplet.QUADS);
-		g.rect(0, 0, 80, 80);
-		g.endShape();
-		
-		//
+		drawSquare(g, 0, 0, 80, 80, new MTColor(255, 255, 0, 255));
+		drawSquare(g, 80, 0, 80, 80, new MTColor(0, 255, 0, 255));
+		drawSquare(g, 160, 0, 80, 80, new MTColor(0, 255, 255, 255));
+		drawSquare(g, 240, 0, 80, 80, new MTColor(255, 0, 0, 255));
+		drawSquare(g, 320, 0, 80, 80, new MTColor(0, 0, 255, 255));
+		drawSquare(g, 400, 0, 80, 80, new MTColor(255, 0, 255, 255));
+		drawSquare(g, 480, 0, 80, 80, new MTColor(255, 255, 255, 255));
+		//drawSquare(g, 560, 0, 80, 80, new MTColor(0, 0, 0, 255));
+	}
 
-		MTColor strokeCol = new MTColor(0, 255, 0, 255);
+	private void drawSquare(PGraphics g, float x, float y, float w, float h, MTColor color) {
 		g.strokeWeight(this.getStrokeWeight());
-		g.stroke(strokeCol.getR(), strokeCol.getG(), strokeCol.getB(), strokeCol.getAlpha());
+		g.stroke(color.getR(), color.getG(), color.getB(), color.getAlpha());
 		
-		MTColor fillCol = new MTColor(0, 255, 0, 255);
-		g.fill(fillCol.getR(), fillCol.getG(), fillCol.getB(), fillCol.getAlpha());
+		g.fill(color.getR(), color.getG(), color.getB(), color.getAlpha());
 		
 		
 		g.beginShape(PApplet.QUADS);
-		g.rect(80, 0, 80, 80);
+		g.rect(x, y, w, h);
 		g.endShape();
 	}
 

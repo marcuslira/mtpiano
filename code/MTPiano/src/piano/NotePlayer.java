@@ -17,7 +17,20 @@ public class NotePlayer {
 	}
 
 	public enum Key {
-		KEY_TYPE_C, KEY_TYPE_C_SUST, KEY_TYPE_D, KEY_TYPE_D_SUST, KEY_TYPE_E, KEY_TYPE_F, KEY_TYPE_F_SUST, KEY_TYPE_G, KEY_TYPE_G_SUST, KEY_TYPE_A, KEY_TYPE_A_SUST, KEY_TYPE_B, KEY_TYPE_C_UP, KEY_TYPE_INVALID
+		KEY_TYPE_C,
+		KEY_TYPE_C_SUST,
+		KEY_TYPE_D,
+		KEY_TYPE_D_SUST,
+		KEY_TYPE_E,
+		KEY_TYPE_F,
+		KEY_TYPE_F_SUST,
+		KEY_TYPE_G,
+		KEY_TYPE_G_SUST,
+		KEY_TYPE_A,
+		KEY_TYPE_A_SUST,
+		KEY_TYPE_B,
+		KEY_TYPE_C_UP,
+		KEY_TYPE_INVALID
 	}
 
 	private Map<Key, NoteMinim> keys;
@@ -34,10 +47,20 @@ public class NotePlayer {
 		
 		keys.put(k, nm);
 
-		if (k == Key.KEY_TYPE_C) {
-			out.playNote("C3");
-		} else if (k == Key.KEY_TYPE_A) {
+		if (k == Key.KEY_TYPE_A) {
 			out.playNote("A3");
+		} else if (k == Key.KEY_TYPE_B) {
+			out.playNote("B3");
+		} else if (k == Key.KEY_TYPE_C) {
+			out.playNote("C3");
+		} else if (k == Key.KEY_TYPE_D) {
+			out.playNote("D3");
+		} else if (k == Key.KEY_TYPE_E) {
+			out.playNote("E3");
+		} else if (k == Key.KEY_TYPE_F) {
+			out.playNote("F3");
+		} else if (k == Key.KEY_TYPE_G) {
+			out.playNote("G3");
 		}
 		
 		if (out.isMuted()) {
