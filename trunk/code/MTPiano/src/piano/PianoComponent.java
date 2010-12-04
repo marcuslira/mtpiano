@@ -39,6 +39,7 @@ public class PianoComponent extends AbstractVisibleComponent {
 	private PImage pressedMiddleKey;
 	private PImage pressedRightKey;
 	private PImage pressedSustKey;
+	private PImage colorMap;
 	
 		
 	public PianoComponent(PApplet applet) {
@@ -63,6 +64,8 @@ public class PianoComponent extends AbstractVisibleComponent {
 		this.pressedMiddleKey = this.app.loadImage("res/key_middle_pressed.png");
 		this.pressedRightKey = this.app.loadImage("res/key_right_pressed.png");
 		this.pressedSustKey = this.app.loadImage("res/key_sust_pressed.png");
+		this.colorMap = this.app.loadImage("res/colormap.png");
+		this.colorMap.loadPixels();
 		
 		this.setNoStroke(false);
 		this.setStrokeWeight(0.8f);
@@ -116,27 +119,93 @@ public class PianoComponent extends AbstractVisibleComponent {
 	private NotePlayer.Key getKey(float x, float y) {
 		NotePlayer.Key result = NotePlayer.Key.KEY_TYPE_INVALID;
 		
-		if (y < 367) {
-			if (x<100) {				
-				result = NotePlayer.Key.KEY_TYPE_C;
-			} else if (x>100 && x<200) {
-				result = NotePlayer.Key.KEY_TYPE_D;
-			}  else if (x>200 && x<300) {
-				result = NotePlayer.Key.KEY_TYPE_E;
-			}  else if (x>300 && x<400) {
-				result = NotePlayer.Key.KEY_TYPE_F;
-			}  else if (x>400 && x<500) {
-				result = NotePlayer.Key.KEY_TYPE_G;
-			}  else if (x>500 && x<600) {
-				result = NotePlayer.Key.KEY_TYPE_A;
-			}  else if (x>600 && x<700) {
-				result = NotePlayer.Key.KEY_TYPE_B;
-			}  else if (x>700 && x<800) {
-				result = NotePlayer.Key.KEY_TYPE_C_UP;
-			} else {
-				result = NotePlayer.Key.KEY_TYPE_INVALID;
-			}			
+		int pixelColor = this.colorMap.pixels[Math.round(y) * colorMap.width + Math.round(x)];
+		
+		switch (pixelColor) {
+		case -65536:
+		{
+			result = NotePlayer.Key.KEY_TYPE_C;
+		}	
+			break;
+
+		case -16767233:
+		{
+			result = NotePlayer.Key.KEY_TYPE_C_SUST;
+		}	
+			break;
+
+		case -38400:
+		{
+			result = NotePlayer.Key.KEY_TYPE_D;
+		}	
+			break;
+		
+		case -14614401:
+		{
+			result = NotePlayer.Key.KEY_TYPE_D_SUST;
+		}	
+			break;
+		
+		case -10240:
+		{
+			result = NotePlayer.Key.KEY_TYPE_E;
+		}	
+			break;
+		
+		case -4784384:
+		{
+			result = NotePlayer.Key.KEY_TYPE_F;
+		}	
+			break;
+		
+		case -5111553:
+		{
+			result = NotePlayer.Key.KEY_TYPE_F_SUST;
+		}	
+			break;
+		
+		case -11731200:
+		{
+			result = NotePlayer.Key.KEY_TYPE_G;
+		}	
+			break;
+		
+		case -65316:
+		{
+			result = NotePlayer.Key.KEY_TYPE_G_SUST;
+		}	
+			break;
+
+		case -16711792:
+		{
+			result = NotePlayer.Key.KEY_TYPE_A;
+		}	
+			break;
+
+		case -65426:
+		{
+			result = NotePlayer.Key.KEY_TYPE_A_SUST;
+		}	
+			break;
+		case -16711681:
+		{
+			result = NotePlayer.Key.KEY_TYPE_B;
+		}	
+			break;
+
+		case -16739073:
+		{
+			result = NotePlayer.Key.KEY_TYPE_C_UP;
+		}	
+			break;
+			
+		default:
+			break;
 		}
+
+		
+		//System.out.println("color: " + pixelColor);
+
 		
 		return result;
 	}
