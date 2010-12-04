@@ -19,6 +19,7 @@ import org.mt4j.util.math.Vector3D;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 /**
  * The PianoComponent is a class that extends AbstractVisibleComponent.
@@ -33,6 +34,12 @@ public class PianoComponent extends AbstractVisibleComponent {
 	private NotePlayer notePlayer;
 	private Set<NotePlayer.Key> activeKeys;
 	private Map<Long, Vector3D> activeIds;
+	private PImage backgroundImage;
+	private PImage pressedLeftKey;
+	private PImage pressedMiddleKey;
+	private PImage pressedRightKey;
+	private PImage pressedSustKey;
+	
 		
 	public PianoComponent(PApplet applet) {
 		super(applet);
@@ -50,6 +57,12 @@ public class PianoComponent extends AbstractVisibleComponent {
 		Vector3D norm = new Vector3D(0,0,1);
 		Vector3D pointInPlane = new Vector3D(0,0,0);
 		plane = new Plane(pointInPlane, norm);
+		
+		this.backgroundImage = this.app.loadImage("res/keys.png");
+		this.pressedLeftKey = this.app.loadImage("res/key_left_pressed.png");
+		this.pressedMiddleKey = this.app.loadImage("res/key_middle_pressed.png");
+		this.pressedRightKey = this.app.loadImage("res/key_right_pressed.png");
+		this.pressedSustKey = this.app.loadImage("res/key_sust_pressed.png");
 		
 		this.setNoStroke(false);
 		this.setStrokeWeight(0.8f);
@@ -101,24 +114,31 @@ public class PianoComponent extends AbstractVisibleComponent {
 	}
 	
 	private NotePlayer.Key getKey(float x, float y) {
-		// TODO Auto-generated method stub
-		if (x<80 && y<80) {
-			return NotePlayer.Key.KEY_TYPE_C;
-		} else if (x>80 && x<160 && y<80) {
-			return NotePlayer.Key.KEY_TYPE_D;
-		}  else if (x>160 && x<240 && y<80) {
-			return NotePlayer.Key.KEY_TYPE_E;
-		}  else if (x>240 && x<320 && y<80) {
-			return NotePlayer.Key.KEY_TYPE_F;
-		}  else if (x>320 && x<400 && y<80) {
-			return NotePlayer.Key.KEY_TYPE_G;
-		}  else if (x>400 && x<480 && y<80) {
-			return NotePlayer.Key.KEY_TYPE_A;
-		}  else if (x>480 && x<560 && y<80) {
-			return NotePlayer.Key.KEY_TYPE_B;
-		} else {
-			return NotePlayer.Key.KEY_TYPE_INVALID;
+		NotePlayer.Key result = NotePlayer.Key.KEY_TYPE_INVALID;
+		
+		if (y < 367) {
+			if (x<100) {				
+				result = NotePlayer.Key.KEY_TYPE_C;
+			} else if (x>100 && x<200) {
+				result = NotePlayer.Key.KEY_TYPE_D;
+			}  else if (x>200 && x<300) {
+				result = NotePlayer.Key.KEY_TYPE_E;
+			}  else if (x>300 && x<400) {
+				result = NotePlayer.Key.KEY_TYPE_F;
+			}  else if (x>400 && x<500) {
+				result = NotePlayer.Key.KEY_TYPE_G;
+			}  else if (x>500 && x<600) {
+				result = NotePlayer.Key.KEY_TYPE_A;
+			}  else if (x>600 && x<700) {
+				result = NotePlayer.Key.KEY_TYPE_B;
+			}  else if (x>700 && x<800) {
+				result = NotePlayer.Key.KEY_TYPE_C_UP;
+			} else {
+				result = NotePlayer.Key.KEY_TYPE_INVALID;
+			}			
 		}
+		
+		return result;
 	}
 	
 	private class DragListener implements IGestureEventListener{
@@ -126,7 +146,7 @@ public class PianoComponent extends AbstractVisibleComponent {
 			DragEvent de = (DragEvent)ge;
 			Vector3D to = de.getTo();
 			switch (de.getId()) {
-			case DragEvent.GESTURE_DETECTED:{
+			case DragEvent.GESTURE_DETECTED:{	
 				//System.out.println("DETECTED X: "+to.x+" || Y: "+to.y+" || ID: "+de.getDragCursor().getId());
 				activeIds.put(de.getDragCursor().getId(), to);
 			}break;
@@ -145,30 +165,76 @@ public class PianoComponent extends AbstractVisibleComponent {
 			return true;
 		}
 	}
+	
+	public void drawPiano()	{
+		
+		// setting piano background
+		this.app.image(this.backgroundImage, 0, 0);
+	  
+		for (NotePlayer.Key k : activeKeys) {
+			switch (k) {
+			case KEY_TYPE_C:
+				this.app.image(pressedLeftKey, 0, 0);
+				break;
+			case KEY_TYPE_C_SUST:
+				this.app.image(pressedSustKey, 70, 0);
+				break;
+
+			case KEY_TYPE_D:
+				this.app.image(pressedMiddleKey, 100, 0);
+				break;
+				
+			case KEY_TYPE_D_SUST:
+				this.app.image(pressedSustKey, 170, 0);
+				break;
+			
+			case KEY_TYPE_E:
+				this.app.image(pressedRightKey, 200, 0);
+				break;
+			
+			case KEY_TYPE_F:
+				this.app.image(pressedLeftKey, 300, 0);
+				break;
+			
+			case KEY_TYPE_F_SUST:
+				this.app.image(pressedSustKey, 370, 0);
+				break;
+			
+			case KEY_TYPE_G:
+				this.app.image(pressedMiddleKey, 400, 0);
+				break;
+
+			case KEY_TYPE_G_SUST:
+				this.app.image(pressedSustKey, 470, 0);
+				break;
+				
+			case KEY_TYPE_A:
+				this.app.image(pressedMiddleKey, 500, 0);
+				break;
+				
+			case KEY_TYPE_A_SUST:
+				this.app.image(pressedSustKey, 570, 0);
+				break;
+				
+			case KEY_TYPE_B:
+				this.app.image(pressedRightKey, 600, 0);
+				break;
+			
+			case KEY_TYPE_C_UP:
+				this.app.image(pressedLeftKey, 700, 0);
+				break;
+				
+			default:
+				break;
+			}
+	  }		 		  
+	}
 
 	@Override
-	public void drawComponent(PGraphics g) {
-		drawSquare(g, 0, 0, 80, 80, new MTColor(255, 255, 0, 255));
-		drawSquare(g, 80, 0, 80, 80, new MTColor(0, 255, 0, 255));
-		drawSquare(g, 160, 0, 80, 80, new MTColor(0, 255, 255, 255));
-		drawSquare(g, 240, 0, 80, 80, new MTColor(255, 0, 0, 255));
-		drawSquare(g, 320, 0, 80, 80, new MTColor(0, 0, 255, 255));
-		drawSquare(g, 400, 0, 80, 80, new MTColor(255, 0, 255, 255));
-		drawSquare(g, 480, 0, 80, 80, new MTColor(255, 255, 255, 255));
-		//drawSquare(g, 560, 0, 80, 80, new MTColor(0, 0, 0, 255));
+	public void drawComponent(PGraphics g) {		 
+		drawPiano();
 	}
 
-	private void drawSquare(PGraphics g, float x, float y, float w, float h, MTColor color) {
-		g.strokeWeight(this.getStrokeWeight());
-		g.stroke(color.getR(), color.getG(), color.getB(), color.getAlpha());
-		
-		g.fill(color.getR(), color.getG(), color.getB(), color.getAlpha());
-		
-		
-		g.beginShape(PApplet.QUADS);
-		g.rect(x, y, w, h);
-		g.endShape();
-	}
 
 	@Override
 	protected boolean componentContainsPointLocal(Vector3D testPoint) {
