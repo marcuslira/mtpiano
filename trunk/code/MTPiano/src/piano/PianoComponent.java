@@ -205,8 +205,6 @@ public class PianoComponent extends AbstractVisibleComponent {
 
 		
 		//System.out.println("color: " + pixelColor);
-
-		
 		return result;
 	}
 	
