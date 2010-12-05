@@ -48,19 +48,31 @@ public class NotePlayer {
 		keys.put(k, nm);
 
 		if (k == Key.KEY_TYPE_A) {
-			out.playNote("A3");
+			out.playNote("A");
 		} else if (k == Key.KEY_TYPE_B) {
-			out.playNote("B3");
+			out.playNote("B");
 		} else if (k == Key.KEY_TYPE_C) {
-			out.playNote("C3");
+			out.playNote("C");
 		} else if (k == Key.KEY_TYPE_D) {
-			out.playNote("D3");
+			out.playNote("D");
 		} else if (k == Key.KEY_TYPE_E) {
-			out.playNote("E3");
+			out.playNote("E");
 		} else if (k == Key.KEY_TYPE_F) {
-			out.playNote("F3");
+			out.playNote("F");
 		} else if (k == Key.KEY_TYPE_G) {
-			out.playNote("G3");
+			out.playNote("G");
+		} else if (k == Key.KEY_TYPE_C_SUST) {
+			out.playNote("C#");
+		} else if (k == Key.KEY_TYPE_D_SUST) {
+			out.playNote("D#");
+		} else if (k == Key.KEY_TYPE_F_SUST) {
+			out.playNote("F#");
+		} else if (k == Key.KEY_TYPE_G_SUST) {
+			out.playNote("G#");
+		} else if (k == Key.KEY_TYPE_A_SUST) {
+			out.playNote("A#");
+		} else if (k == Key.KEY_TYPE_C_UP) {
+			out.playNote("C5");
 		}
 		
 		if (out.isMuted()) {
