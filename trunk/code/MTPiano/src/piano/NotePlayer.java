@@ -36,7 +36,7 @@ public class NotePlayer {
 	private Map<Key, NoteMinim> keys;
 	
 	public void playNote(Key k) {
-		stopNote(k);
+		closeMinim(k);
 
 		Minim minim = new Minim(app);
 		AudioOutput out = minim.getLineOut(Minim.MONO, 2048);
@@ -103,14 +103,18 @@ public class NotePlayer {
 	}
 
 	public void stopNote(Key k) {
-		if (keys.containsKey(k)) {
-//			NoteMinim nm = keys.get(k);
-//			nm.getAudioOutput().mute();
-//			nm.getAudioOutput().close();
-//			nm.getMinim().stop();
-		}
+		
 	}
 
+	private void closeMinim(Key k) {
+		if (keys.containsKey(k)) {
+			NoteMinim nm = keys.get(k);
+			nm.getAudioOutput().mute();
+			nm.getAudioOutput().close();
+			nm.getMinim().stop();
+		}
+	}
+	
 	private class NoteMinim {
 		private AudioOutput out;
 		private Minim minim;

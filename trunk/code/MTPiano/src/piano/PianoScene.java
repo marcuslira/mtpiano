@@ -21,7 +21,7 @@ public class PianoScene extends AbstractScene {
 	public PianoScene(MTApplication mtApplication, String name) {
 		super(mtApplication, name);
 		this.mtApp = mtApplication;
-		this.setClearColor(new MTColor(140, 140, 110, 255));
+		this.setClearColor(new MTColor(0, 0, 0, 255));
 		
 		//Create tail component
 		piano = new PianoComponent(mtApp);
